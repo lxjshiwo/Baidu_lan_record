@@ -1,0 +1,430 @@
+﻿
+掌握eric开发pyqt
+
+
+新建工程
+新建ui文件
+编辑ui文件
+编译ui文件为py文件
+运行py文件
+
+左边
+    工程区域
+
+
+常用界面布局
+    横向布局
+    纵向布局
+    网格布局
+    窗体布局
+
+
+label控件
+    显示信息
+    允许显示中文，不为乱码
+
+
+button控件
+    pyqt信号与槽
+    用户提交
+
+qt信号与槽机制
+    QT提供两种机制,底层和高级的信号与槽
+    信号与槽:
+        所有控件支持信号与槽预定义信号和槽 
+    控件触发后,直接发射出信号就不管了
+    信号需要连接到槽，才能得到处理
+    预定义的信号和槽可以连接到一起，0代码实现一定功能
+    不同控件发射出的信号类型可能不同
+    pyQt槽函数，可以是任何可以调用的东西，没有特殊格式要求
+
+    self.connect(widgets,SIGNAL("signal"),func)
+    self.connect(widtgets,SIGNAL("signal"),instance.methodname)
+    self.connect(widgets,SIGNAL("signal"),instance,SLOT("slotSignature"))
+
+
+    通过
+    QtCore.QMetaObject.connectSlotsByName(MainWindow)
+    连接控件和槽函数
+
+
+    装饰器
+    @pyqtSinagture("")
+    当有多个同名的槽函数的时候使用该装饰器，将相应的槽和函数相连接
+
+    自动生成的知识类 需要实例化
+    导入缺失的包
+
+
+单行文本框
+    用于接收用户的输入信息
+    显示信息
+    与其他空间一起使用，独立存在的意义不大
+多行文本框显示
+    显示大量文本
+    输入多行文本
+    只读，读写编辑属性
+    与其他控件一起使用
+
+python sys标准包
+    sys.getdefaultencoding()
+    sys.setdefaultencoding()
+
+radio button
+    获取用户选择
+    一般不单独选择使用
+    选项之间互斥
+    多个选项之间需要在一个组里
+    
+
+掌握手轮和滑块控件的使用    
+带参数信号处理 
+
+手轮控件
+    获取用户设定数值
+    旋钮
+    发射携带参数的信号
+
+滑块控件
+    获取用户设定值  
+    功能与旋钮类似
+    发射携带参数的信号
+    音量，亮度调节经常使用
+
+
+运行时警告，弹框
+    QMessageBox
+        .information
+        .questtion
+        .warning
+        .about
+
+    
+    通知对话框
+    询问对话框
+    警告对话框
+    严重警告对话框
+    关于对话框
+
+
+
+获取相应的输入值
+    QInputDialog
+            .getText(self,name,value,QLineEdit.Normal,buttonValue)
+            .getInteger(self,name,value,presentValue,minValue,maxValue)
+            下拉框
+            .getItem(self,name,selectName,QStringList)
+    QStringList
+    
+  定制输入对话框 
+    一次性获取多个用户信息
+    修改全局变量
+    个性化定制
+
+
+
+
+  添加图片文件
+  资源编译为py文件
+
+
+  增加相应的点击事件
+    .mousePressEvent = self.my_clicked
+
+  def my_clicked(self,e):
+
+  
+  import webbrowser
+  webbrowser
+    webbrowser.open('url')
+  
+  background picture 
+    背景图片
+  border picture
+    伸缩图片
+  
+    原比例图片
+
+    //修改原来的背景图片
+    graphicView.setStyleSheet(("border-image: url(:/my_pic/0.jpg);"))
+
+启动界面 
+    显示启动界面不能阻塞gui事件响应 
+    QSplashScreen
+
+    添加文本信息到界面
+    showMessage(u'正在加载图片资源...',Qt.AlignCenter,Qt.red)
+        
+菜单栏
+    添加菜单栏
+    添加操作选项，action
+        on_action_triggered(self)
+    为操作选项添加图标
+    在相应属性中,icon属性选择图标
+    实现action的槽函数
+
+打开文本文件
+        my_file_path = QtGui.QFileDialog.getOpenFileName(self,u'打开文件','/')
+        print unicode(my_file_path)
+        f = open(unicode(my_file_path))
+        my_data = f.read()
+        f.close()
+        self.textBrowser.append(my_data.decode('utf8'))
+    
+将文本框内容保存到文本
+
+
+python访问word文档
+    获取后缀名
+    文本处理过程中的编解码问题
+    Win32com扩展包
+        调用word程序
+        读取word文档
+        显示多行文本框
+        关闭文档
+    
+    
+    Docx扩展包    
+        创建、修改word文本
+        pip install python-docx
+
+
+
+    访问excel文件
+        Win32com扩展包
+        遍历单元格
+
+    XLrd扩展包
+        只能读取，不能写入，跨平台，速度快
+    xlwt扩展包
+        实现xls写入
+
+
+
+    界面设计    
+
+
+    主窗体
+    开始菜单
+    浏览文件夹按钮
+        Pyqt提供标准的选择文件夹对话框
+        QtGui.QFileDialog.getExistingDirectory
+    搜索按钮
+    指定文件夹对话框
+
+
+    os模块
+        os模块判断路径是否为文件夹
+            .isdir()
+            .mkdir(pathname)
+            .path.exists(pathname)
+        os模块遍历文件夹内文件方法
+        glob模块匹配特定文件方法
+            * 
+                匹配0或多个字符
+            ?
+                匹配单个字符
+            []
+                匹配单位内的字符
+            {}
+
+            \d
+                匹配数字
+            \D
+            \s
+                空格
+        python与操作系统接口的重要模块
+
+
+     excel
+
+     Python正则表达式
+     Re模块
+        基于perl正则表达式
+        Search和match
+        Re.complie()
+        
+     Shutil模块
+        提供高级的文件访问操作，复制文件，复制文件权限，递归复制目录树等
+        shutil.copy(src,dst)
+
+     python程序打包为可执行文件的方法
+     pyinstaller
+
+     Py2exe
+        windows下打包
+
+     下载Pyinstaller的源码，使用python setup.py install 安装相应程序
+     Pyinstaller
+        依赖pywin32扩展包 anaconda包含
+        可选择打包为
+            单个文件
+                创建_MEIxxxx临时文件夹，由bootloader复制文件，运行结束后自动删
+                除，意外关闭程序，临时文件无法删除
+
+
+
+                pyinstaller 相应文件.py 
+
+                打包在dist目录下
+            单个文件夹
+                pyinstaller -F 相应文件.py
+                dist目录下
+                
+            打包为windows窗口程序
+                pyinstaller -F -w 相应文件.py
+            更改程序图标
+                pyinstaller -F -w -i 图标文件路径 相应文件.py
+
+
+
+        可以同时运行多个打包后的单个文件，各个程序间不共享资源，耗费存储空间
+        严禁赋予打包后的程序管理员权限，只使用普通权限，以防止bootloader复制共
+        享库期间，遭到代码注入攻击后，破坏系统
+        打包后文件只能在英文路径下运行
+        程序本身必须使用英文命名
+            
+    
+云语音识别
+    识别协议
+        REST API
+        POST方式
+        隐式发送和显示发送
+            隐式发送
+                语音数据和其他数据通过标准JSON格式化POST上传，JSON包含参数
+                    format String  必填
+                    rate int    8000或者6000 
+                    channel int 
+                    cuid string 客户唯一标识
+                    token string  access_token
+                    ptc int     
+                    lan 
+                    url String 语音下载地址
+                    callback string 选填
+                    分开两两绑定字段
+                    speech  string 选填
+                    len     int 选填
+             显式发送
+                语音数据直接放在HTTP-BODY中,控制参数以及相关统计信息通过REST参
+                数传递,
+                    cuid string 必须
+                    token string    必须
+                    lan string  选填
+                    ptc int 协议号
+
+
+
+
+        8k/16k采样率16bit位深
+        格式:
+            pcm (不压缩) wav,opus,speex,amr,x-flac
+    
+        下行接口定义
+            百度返回数据
+            可能识别结果，
+
+        错误码解释
+            3300    输入参数不正确
+            3301    识别错误
+            3302    验证失败
+            3303    语音服务器后端问题
+            3304    请求GPS过大，超过限额
+            3305    产品线当前请求超过限额
+
+
+        pyaudio
+            
+            wav音频文件参数
+                声道数
+                采样频率
+                量化位数
+            pyaudio扩展包和wave模块录制语音
+
+
+            思路
+            1.两个线程，gui和 语音识别通过queue在线程间传输数据
+            2.将语音识别函数变为gui类的方法，在一个类内部实现全部功能
+    
+    连续语音识别
+        多线程
+            GUI类继承threading类
+            初始化父类
+            重写run方法
+
+
+         识别程序一直运行
+         录音程序一致运行
+         生产者和消费者问题
+         线程通过queue传递数据
+         wav文件特殊处理
+
+
+     连续语音降滤除
+        录音线程不断向硬盘写入文件
+        无论麦克风是否采集到有效的音频数据
+
+        由于录音线程不断写入文件，导致音频队列一直有数据，识别线程被迫一直工作
+        ,很多无效数据被上传云端
+
+
+        没有静音检测机制,一条音频时间长度固定，无效数据过多,影响传输效率
+        没有语音输入时,录音线程停止向硬盘写入，识别线程随之停止工作
+        python+numpy+matplotlib
+        
+
+        使用numpy处理音频数据
+            1.设置本底噪声门限
+            2.对每个pyaudio缓存内的麦克风采样数据进行统计,有多少个超过本底噪声
+            3.设置有效数据门限
+            4.将超过本底噪声的数据个数累加,与有效门限比较，超过则认为是有效数据
+            5.在录音时间内,连续无效数据超过设定的上限后，认为用户输入完成,提前
+            结束录音
+            6.录音时间不能超过一分钟,超过部分自动计如第二段音频(百度语音要求)
+
+
+        与硬件交互
+            1.pyserial扩展包
+            
+            开源硬件系统
+
+            串行通讯
+                RS232,RS422,RS485
+                使用USB转xxx
+                双工，异步通讯
+                低速设备,嵌入式系统使用较多
+
+            arduino
+                开源硬件
+
+
+            pip install pyserial
+            
+            import serial
+                使用相应的库函数
+
+
+
+
+
+
+
+
+
+
+
+查看Key
+
+App ID: 11257810
+
+API Key: bGxcA8SRIrwKtp1GhE4aZ2rs
+
+Secret Key: a72b7d8535ef7a29914850a88b0fdbe7
+
+      
+        https://openapi.baidu.com/oauth/2.0/token?grant_type=client_credentials&client_id=bGxcA8SRIrwKtp1GhE4aZ2rs&client_secret=a72b7d8535ef7a29914850a88b0fdbe7 
+
+
+
+
+   
+
